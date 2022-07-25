@@ -1,0 +1,24 @@
+{
+  "name": "ejercicio13---ifcjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "hold-event": "^0.2.0",
+    "three": "^0.142.0",
+    "web-ifc": "^0.0.35",
+    "web-ifc-three": "^0.0.118",
+    "web-ifc-viewer": "^1.0.207"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "rollup": "^2.77.0"
+  }
+}

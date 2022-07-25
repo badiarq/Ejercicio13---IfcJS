@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>BIM Viewer</title>
+</head>
+<body class="viewerPage">
+        <!-- Navigation Bar -->
+        <nav class="navbar-expand-md navbar-dark bg-dark">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://www.buildingsmart.org/about/openbim/openbim-definition/">What is OpenBIM?</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://ifcjs.github.io/info/">IFC.js</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://www.buildingsmart.org/standards/bsi-standards/industry-foundation-classes/">What is IFC?</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://ifcjs.github.io/info/docs/Courses/Getting-started#learn-bim-development-with-us">BIM Development Course</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Viewer Section-->
+        <div class="container">
+            <div class="row viewerSection">
+            
+                <!-- Loader  -->
+                <!-- <div id="loader-container">
+                    <div class="loader"></div>
+                    <p id="progress-text">loading...</p>
+                </div>  -->
+
+                <!-- Viewer Container -->
+                <div class="viewer-container col-12 col-md-9 col-lg-9 col-xxl-9">
+
+                    <!-- keyboard keys description -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="viewer-description col-12">
+                                <p>W, A, S, D keys to move</p>
+                                <p>arrow keys (left, right, up, down) to rotate</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div id="measures-description" class="viewer-description col-12">
+                                <p>Press "SHIFT" button to measure a distance between 2 elements (click + Drag + click)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Model Viewer -->
+                    <div id="viewer-container" class="bimViewer">
+                        <div id="canvas-label"></div>
+                        <canvas id="three-canvas"></canvas>
+                    </div>
+
+                    <!-- Tools Viewer -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="tools-container col-12">
+                                <div class="buttons-container ">
+                                    <div class="button-item">
+                                        <button id="fit-view" class="tool-button" title="Fit All Model in Screen"></button>
+                                    </div>
+                                    <div class="button-item">
+                                        <button id="left-view" class="tool-button" title="Left-side View"></button>
+                                    </div>
+                                    <div class="button-item">
+                                        <button id="front-view" class="tool-button" title="Front-side View"></button>
+                                    </div>
+                                    <div class="button-item">
+                                        <button id="right-view" class="tool-button" title="Right-side View"></button>
+                                    </div>
+                                    <div class="button-item">
+                                        <button id="back-view" class="tool-button" title="Back-side View"></button>
+                                    </div>
+                                    <div class="button-item">
+                                        <button id="wireframe-view" class="tool-button" title="Wireframe View"></button>
+                                    </div>
+                                    <div class="button-item">
+                                        <button id="colored-view" class="tool-button" title="Textured View"></button>
+                                    </div>
+                                    <div class="button-item">
+                                        <button id="deleteMeasurements" class="tool-button" title="Remove Measurements"></button>
+                                    </div>
+                                    <div class="button-item">
+                                        <button id="hide-objects" class="tool-button" title="Hide Objects"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Menu -->
+                <div class="col-12 col-md-3 col-lg-3 col-xxl-3">
+
+                    <!-- Input Button -->
+                    <input type="file" id="file-input" title="Select the model to load">
+
+                    <!-- Shortcut projects button -->
+                    <ul class="projectList">
+                        <!-- Projects Shortcut -->
+                        <button id="ps1" class="projectShortcut learn-more">
+                            <span class="circle" aria-hidden="true">
+                                <span class="icon arrow"></span>
+                            </span>
+                            <span class="button-text">House</span>
+                        </button>
+
+                        <button id="ps2" class="projectShortcut learn-more">
+                            <span class="circle" aria-hidden="true">
+                                <span class="icon arrow"></span>
+                            </span>
+                            <span class="button-text">Wooden Box</span>
+                        </button>
+
+                        <button id="ps3" class="projectShortcut learn-more">
+                            <span class="circle" aria-hidden="true">
+                                <span class="icon arrow"></span>
+                            </span>
+                            <span class="button-text">Bedroom</span>
+                        </button>
+
+                        <button id="ps4" class="projectShortcut learn-more">
+                            <span class="circle" aria-hidden="true">
+                                <span class="icon arrow"></span>
+                            </span>
+                            <span class="button-text">Hotel 3 stars</span>
+                        </button>
+
+                        <button id="ps5" class="projectShortcut learn-more">
+                            <span class="circle" aria-hidden="true">
+                                <span class="icon arrow"></span>
+                            </span>
+                            <span class="button-text">Japense Room</span>
+                        </button>
+
+                        <button id="ps6" class="projectShortcut learn-more">
+                            <span class="circle" aria-hidden="true">
+                                <span class="icon arrow"></span>
+                            </span>
+                            <span class="button-text">Living Room</span>
+                        </button>
+
+                        <button id="ps7" class="projectShortcut learn-more">
+                            <span class="circle" aria-hidden="true">
+                                <span class="icon arrow"></span>
+                            </span>
+                            <span class="button-text">Cathedral</span>
+                        </button>
+
+                        <button id="ps8" class="projectShortcut learn-more">
+                            <span class="circle" aria-hidden="true">
+                                <span class="icon arrow"></span>
+                            </span>
+                            <span class="button-text">Sport Car</span>
+                        </button>
+
+                        <!-- Stats bar -->
+                        <div class="stats-container col-12 col-md-9 col-lg-9 col-xxl-9 pt-3">
+                        </div>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    <footer>
+        <div class="footerSection">
+            <h6 class="footerText"">For more information: </h6>
+            <div class="footerButtons">
+                <a class="footerBtn" href="https://www.linkedin.com/in/ouahbi/">Facebook</a>
+                <a class="footerBtn" href="https://www.linkedin.com/in/ouahbi/">Linkedin</a>
+                <a class="footerBtn" href="https://www.linkedin.com/in/ouahbi/">Instagram</a>
+                <a class="footerBtn" href="https://www.linkedin.com/in/ouahbi/">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./bundle.js"></script>
+    <script src="./projects.js"></script>
+</body>
+</html>
