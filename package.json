@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "rollup -c",
-    "watch": "rollup -c -w"
+    "watch": "rollup -c -w",
+    "update-ifcjs": "npm i web-ifc-three@latest && npm i && copy-wasm",
+    "copy-wasm": "cpy node_modules/web-ifc/web-ifc.wasm . && cpy node_modules/web-ifc/web-ifc-mt.wasm ."
   },
   "keywords": [],
   "author": "",
