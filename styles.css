@@ -335,6 +335,10 @@ body {
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
+    padding: 0;
+    width: 100%;
+    overflow: auto;
+    margin-top: var(--coverMargin);
 }
 
 
@@ -432,17 +436,29 @@ color: #fff;
     border-radius: 0.5rem;
 }
 
+.right-menu {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 0px
+}
+
+.viewer-tools-container, .viewer-description-container {
+    width: 100%
+}
+
 #file-input{
     margin: 1.4rem;
 }
 
 .ifc-property-menu {
     border: 1px solid gainsboro;
-    width: 20rem;
-    position: absolute;
+    width: 100%;
     border-radius: var(--coverRadius);
     background: linear-gradient(to bottom,  rgba(226,186,163,0.5) 0%,rgba(226,201,188,0.5) 53%,rgba(229,223,220,0.5) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80e2baa3', endColorstr='#80e5dfdc',GradientType=0 );
+    overflow: auto;
+    height: 40vh;
 }
 
 .ifc-property-item {
@@ -460,4 +476,89 @@ color: #fff;
     width: 100%;
     text-align: right;
     font-weight: 300;
+}
+
+.treeview ul li{
+    background: #F48B94;
+    color: #fff;
+}
+
+.treeview ul li:hover{
+    background: #fff;
+    color: #F48B94;
+}
+
+/*Tree view: https://www.w3schools.com/howto/howto_js_treeview.asp*/
+
+.ifc-tree-menu {
+    overflow : auto;
+    height: 25vh;
+    padding: 0;
+    width: 100%;
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.tree-caret, .leaf-node {
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+    display: block;
+    padding: 1px 6px;
+    background-color: var(--principalColor);
+    border: 1px solid var(--darkColor);
+    width: max-content;
+    border-radius: 0.5rem;
+}
+
+.tree-caret {
+    margin-bottom: 1px;
+}
+
+.leaf-node {
+    background-color: var(--principalColor);
+    opacity: 0.8;
+    color: #4d4d4d;
+    border: none;
+}
+
+/* Remove default bullets */
+ul, #myUL {
+    list-style-type: none;
+}
+
+/* Remove margins and padding from the parent ul */
+#myUL {
+    margin: 0.5rem;
+    padding: 0;
+    height: inherit;
+}
+
+/* Create the tree-caret/arrow with a unicode, and style it */
+.tree-caret::before {
+    content: "\25B6";
+    /* color: black; */
+    display: inline-block;
+    margin-right: 6px;
+}
+
+/* Rotate the tree-caret/arrow icon when clicked on (using JavaScript) */
+.tree-caret-down::before {
+    transform: rotate(90deg);
+}
+
+/* Hide the nested list */
+.nested {
+    display: none;
+}
+
+.nested:hover .tree-caret:hover {
+    background: #fff;
+    color: #F48B94; 
+}
+
+/* Show the nested list when the user clicks on the tree-caret/arrow (with JavaScript) */
+.active {
+    display: block;
+    margin-left: 10px;
 }
