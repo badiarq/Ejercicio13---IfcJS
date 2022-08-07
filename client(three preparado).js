@@ -48,7 +48,6 @@ import { index } from 'hold-event/dist/hold-event.min.js'
 
 //Import Dat.GUI Panel to be able to manipulate a 3D object directly in the page
 import { GUI } from 'dat.gui'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 import {
     CSS2DRenderer,
@@ -56,10 +55,12 @@ import {
 } from 'three/examples/jsm/renderers/CSS2DRenderer'
 
 import { IFCLoader } from "web-ifc-three/IFCLoader";
+import { IfcViewerAPI } from 'web-ifc-viewer';
 
 // 0 The Canvas
   
   const canvas = document.getElementById("three-canvas");
+  container = canvas
   const labelCanvas = document.getElementById("canvas-label");
   
 // 1 The scene
@@ -257,15 +258,28 @@ function animate() {
 animate();
 
 // Load an IFC Model
-const input = document.getElementById("file-input");
-const ifcLoader = new IFCLoader();
+const viewer = new IfcViewerAPI({ container, backgroundColor: 0xffffff });
+// const input = document.getElementById("file-input");
+// const ifcLoader = new IFCLoader();
 
-input.addEventListener(
-    "change",
-    async (changed) => {
-        const ifcURL = URL.createObjectURL(changed.target.files[0]);
-        const model = await ifcLoader.loadAsync(ifcURL);
-        scene.add(model);
-    },
-    false
-);
+
+// input.addEventListener(
+//     "change",
+//     async (changed) => {
+//         const ifcURL = URL.createObjectURL(changed.target.files[0]);
+//         loadIfc(ifcURL);
+//     },
+//     false
+// );
+
+async function loadIfc(url) {
+    await viewer.IFC.setWasmPath("./");
+    const model = await viewer.IFC.loadIfcUrl(url);
+    await viewer.shadowDropper.renderShadow(model.modelID);
+    viewer.context.renderer.postProduction.active = true;
+}
+
+loadIfc('./models/Duplex_A.ifc');
+
+window.ondblclick = () => viewer.IFC.selector.pickIfcItem();
+window.onmousemove = () => viewer.IFC.selector.prePickIfcItem();

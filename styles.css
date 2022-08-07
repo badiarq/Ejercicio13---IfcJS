@@ -213,7 +213,8 @@ body {
     height: 70vh;
     overflow: hidden;
     border-radius: var(--coverRadius);
-    /* background-color:rgb(238, 238, 238); */
+    border: 1px solid gainsboro;
+    background-color:rgb(238, 238, 238);
 }
 
 .stats-container {
@@ -279,7 +280,7 @@ body {
     outline: none;
     left: 0;
     top: 0;
-    display: block;
+    display: flex;
     overflow: hidden;
     border-radius: var(--coverRadius);
 }
@@ -328,10 +329,12 @@ body {
     }
 }
 
-.projectList {
+.PropertiesMenu {
     display: flex;
     flex-direction: column;
-    margin-top: 1rem;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
 
@@ -431,4 +434,30 @@ color: #fff;
 
 #file-input{
     margin: 1.4rem;
+}
+
+.ifc-property-menu {
+    border: 1px solid gainsboro;
+    width: 20rem;
+    position: absolute;
+    border-radius: var(--coverRadius);
+    background: linear-gradient(to bottom,  rgba(226,186,163,0.5) 0%,rgba(226,201,188,0.5) 53%,rgba(229,223,220,0.5) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80e2baa3', endColorstr='#80e5dfdc',GradientType=0 );
+}
+
+.ifc-property-item {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 0.2rem;
+    border-top: solid 1px gainsboro;
+    border-top-style: dashed;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.ifc-property-value {
+    width: 100%;
+    text-align: right;
+    font-weight: 300;
 }
