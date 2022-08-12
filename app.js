@@ -1,9 +1,13 @@
 import { Color } from 'three';
 import { IfcViewerAPI } from 'web-ifc-viewer';
+import CameraControls from 'camera-controls';
+import { index } from 'hold-event/dist/hold-event.min.js'
 import {
     Scene,
     WebGLRenderer,
     PCFSoftShadowMap,
+    Clock,
+    AxesHelper,
 } from "three";
 
 const container = document.getElementById('three-canvas');
@@ -11,22 +15,8 @@ const viewer = new IfcViewerAPI({ container, backgroundColor: new Color(0xffffff
 viewer.grid.setGrid();
 viewer.axes.setAxes();
 
-function animate() {
-    // // update the time for camera-controls
-    // const delta = clock.getDelta();
-    // update camera-controls
-    // cameraControls.update( delta );
-    
-    requestAnimationFrame(animate); 
-    //render Scene and camera
-    // renderer.render( scene, camera );
-    // //render label renderer
-    // labelRenderer.render(scene, camera);
-    
-    // update shadow Size
-    // updateShadowMapSize()
-}
-animate();
+// 1.0 Get the Scene
+const scene = viewer.context.getScene()
 
 //Load IFC Model with IFC-THREE-VIEWER
 async function loadIfc(url) {
@@ -183,3 +173,142 @@ function removeAllChildren(element) {
         element.removeChild(element.firstChild);
     }
 }
+
+
+// 3 The Camera
+
+    // 3.1 Get the camera
+    const camera = viewer.context.getIfcCamera()
+
+    // 3.2 Get Camera Controls
+    const cameraControls = viewer.context.ifcCamera.cameraControls;
+    const clock = new Clock();
+
+        // Min and Max DOLLY ("Zoom")
+        cameraControls.minDistance = 10;
+        cameraControls.maxDistance = 50;
+
+        // Mouse controls
+        cameraControls.mouseButtons.middle = CameraControls.ACTION.TRUCK;
+        cameraControls.mouseButtons.right = CameraControls.ACTION.DOLLY;
+        cameraControls.mouseButtons.wheel = CameraControls.ACTION.DOLLY;
+        // Polar Angle
+        cameraControls.minPolarAngle = Math.PI / 4;
+        cameraControls.maxPolarAngle = 0.55 * Math.PI;
+
+        // Keyboards keys to navigate
+        const KEYCODE = {
+            W: 87,
+            A: 65,
+            S: 83,
+            D: 68,
+            ARROW_LEFT : 37,
+            ARROW_UP   : 38,
+            ARROW_RIGHT: 39,
+            ARROW_DOWN : 40,
+        };
+
+        const wKey = new holdEvent.KeyboardKeyHold( KEYCODE.W, 16.666 );
+        const aKey = new holdEvent.KeyboardKeyHold( KEYCODE.A, 16.666 );
+        const sKey = new holdEvent.KeyboardKeyHold( KEYCODE.S, 16.666 );
+        const dKey = new holdEvent.KeyboardKeyHold( KEYCODE.D, 16.666 );
+        aKey.addEventListener( 'holding', function( event ) { cameraControls.truck( - 0.01 * event.deltaTime, 0, false ) } );
+        dKey.addEventListener( 'holding', function( event ) { cameraControls.truck(   0.01 * event.deltaTime, 0, false ) } );
+        wKey.addEventListener( 'holding', function( event ) { cameraControls.forward(   0.01 * event.deltaTime, false ) } );
+        sKey.addEventListener( 'holding', function( event ) { cameraControls.forward( - 0.01 * event.deltaTime, false ) } );
+        
+        const leftKey  = new holdEvent.KeyboardKeyHold( KEYCODE.ARROW_LEFT,  100 );
+        const rightKey = new holdEvent.KeyboardKeyHold( KEYCODE.ARROW_RIGHT, 100 );
+        const upKey    = new holdEvent.KeyboardKeyHold( KEYCODE.ARROW_UP,    100 );
+        const downKey  = new holdEvent.KeyboardKeyHold( KEYCODE.ARROW_DOWN,  100 );
+        leftKey.addEventListener ( 'holding', function( event ) { cameraControls.rotate( - 0.1 * THREE.MathUtils.DEG2RAD * event.deltaTime, 0, true ) } );
+        rightKey.addEventListener( 'holding', function( event ) { cameraControls.rotate(   0.1 * THREE.MathUtils.DEG2RAD * event.deltaTime, 0, true ) } );
+        upKey.addEventListener   ( 'holding', function( event ) { cameraControls.rotate( 0, - 0.05 * THREE.MathUtils.DEG2RAD * event.deltaTime, true ) } );
+        downKey.addEventListener ( 'holding', function( event ) { cameraControls.rotate( 0,   0.05 * THREE.MathUtils.DEG2RAD * event.deltaTime, true ) } );
+
+    // 3.3 Set camera position (x, y , z) + camera target (x, y, z)
+    cameraControls.setLookAt(-2, 2, 8, 0, 1, 0)
+    // 3.4 Set the camera distance
+    cameraControls.distance = 15;
+
+// Fit Camera to the model bounding Box
+    const fitViewButton = document.getElementById("fit-view");
+    fitViewButton.onclick = () => {
+        viewer.context.renderer.postProduction.active = false;
+        // viewer.context.ifcCamera.cameraControls.fitToBox(scene.children[0], true);
+        fitView()
+        viewer.context.renderer.postProduction.active = true;
+
+    }
+
+    function fitView() {
+        let cameraPositionX = cameraControls.getPosition().x;
+        let cameraPositionY = cameraControls.getPosition().y;
+        let cameraPositionZ = cameraControls.getPosition().z;
+        let cameraTargetX = cameraControls.getTarget().x;
+        let cameraTargetY = cameraControls.getTarget().y;
+        let cameraTargetZ = cameraControls.getTarget().z;
+        cameraControls.fitToBox(scene.children[0], false, {paddingTop:0, paddingLeft: 0, paddingBottom:0, paddingRight:0})
+        let newCameraPositionX = cameraControls.getPosition().x;
+        let newCameraPositionY = cameraControls.getPosition().y;
+        let newCameraPositionZ = cameraControls.getPosition().z;
+        let difPositionX = Math.abs(newCameraPositionX / cameraPositionX);
+        let difPositionY = Math.abs(newCameraPositionY / cameraPositionY);
+        let difPositionZ = Math.abs(newCameraPositionZ / cameraPositionZ);
+        let distanceCoefficient = Math.max(difPositionX, difPositionY, difPositionZ)
+        cameraControls.setPosition(cameraPositionX * distanceCoefficient, cameraPositionY * distanceCoefficient, cameraPositionZ * distanceCoefficient)
+        cameraControls.setTarget(cameraTargetX, cameraTargetY, cameraTargetZ);
+    }
+
+// Left View
+const leftViewButton = document.getElementById("left-view");
+leftViewButton.onclick = () => {
+    viewer.context.renderer.postProduction.active = false;
+    cameraControls.setLookAt(-50, 2.7, 0, 0, 2.7, 0);
+    cameraControls.fitToBox(scene.children[0], true, {paddingTop:0, paddingLeft: 0, paddingBottom:0, paddingRight:0});
+    viewer.context.renderer.postProduction.active = true;
+}
+
+// Front View
+const frontViewButton = document.getElementById("front-view");
+frontViewButton.onclick = () => {
+    viewer.context.renderer.postProduction.active = false;
+    cameraControls.setLookAt(0, 2.7, 50, 0, 2.7, 0);
+    cameraControls.fitToBox(scene.children[0], true, {paddingTop:0, paddingLeft: 0, paddingBottom:0, paddingRight:0});
+    viewer.context.renderer.postProduction.active = true;
+}
+
+// Right View
+const rightViewButton = document.getElementById("right-view");
+rightViewButton.onclick = () => {
+    viewer.context.renderer.postProduction.active = false;
+    cameraControls.setLookAt(50, 2.7, 0, 0, 2.7, 0);
+    cameraControls.fitToBox(scene.children[0], true, {paddingTop:0, paddingLeft: 0, paddingBottom:0, paddingRight:0});
+    viewer.context.renderer.postProduction.active = true;
+}
+
+// Back View
+const backViewButton = document.getElementById("back-view");
+backViewButton.onclick = () => {
+    viewer.context.renderer.postProduction.active = false;
+    cameraControls.setLookAt(0, 2.7, -50, 0, 2.7, 0);
+    cameraControls.fitToBox(scene.children[0], true, {paddingTop:0, paddingLeft: 0, paddingBottom:0, paddingRight:0});
+    viewer.context.renderer.postProduction.active = true;
+}
+
+function animate() {
+    // update the time for camera-controls
+    const delta = clock.getDelta();
+    // update camera-controls
+    cameraControls.update( delta );
+    
+    requestAnimationFrame(animate); 
+    //render Scene and camera
+    // renderer.render( scene, camera );
+    // //render label renderer
+    // labelRenderer.render(scene, camera);
+    
+    // update shadow Size
+    // updateShadowMapSize()
+}
+animate();

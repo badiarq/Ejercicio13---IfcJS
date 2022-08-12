@@ -92776,7 +92776,7 @@ const isBrowser = typeof window !== 'undefined';
 const isMac = isBrowser && /Mac/.test(navigator.platform);
 const isPointerEventsNotSupported = !(isBrowser && 'PointerEvent' in window); // Safari 12 does not support PointerEvents API
 const TOUCH_DOLLY_FACTOR = 1 / 8;
-let THREE;
+let THREE$1;
 let _ORIGIN;
 let _AXIS_Y;
 let _AXIS_Z;
@@ -92979,7 +92979,7 @@ class CameraControls extends EventDispatcher {
             if (isPerspectiveCamera(this._camera)) {
                 const offset = _v3A.copy(this._camera.position).sub(this._target);
                 // half of the fov is center to top of screen
-                const fov = this._camera.getEffectiveFOV() * THREE.MathUtils.DEG2RAD;
+                const fov = this._camera.getEffectiveFOV() * THREE$1.MathUtils.DEG2RAD;
                 const targetDistance = offset.length() * Math.tan(fov * 0.5);
                 const truckX = (this.truckSpeed * deltaX * targetDistance / this._elementRect.height);
                 const pedestalY = (this.truckSpeed * deltaY * targetDistance / this._elementRect.height);
@@ -93041,11 +93041,11 @@ class CameraControls extends EventDispatcher {
             return;
         };
         // Check if the user has installed THREE
-        if (typeof THREE === 'undefined') {
+        if (typeof THREE$1 === 'undefined') {
             console.error('camera-controls: `THREE` is undefined. You must first run `CameraControls.install( { THREE: THREE } )`. Check the docs for further information.');
         }
         this._camera = camera;
-        this._yAxisUpSpace = new THREE.Quaternion().setFromUnitVectors(this._camera.up, _AXIS_Y);
+        this._yAxisUpSpace = new THREE$1.Quaternion().setFromUnitVectors(this._camera.up, _AXIS_Y);
         this._yAxisUpSpaceInverse = quatInvertCompat(this._yAxisUpSpace.clone());
         this._state = ACTION.NONE;
         this._domElement = domElement;
@@ -93053,32 +93053,32 @@ class CameraControls extends EventDispatcher {
         this._domElement.style.userSelect = 'none';
         this._domElement.style.webkitUserSelect = 'none';
         // the location
-        this._target = new THREE.Vector3();
+        this._target = new THREE$1.Vector3();
         this._targetEnd = this._target.clone();
-        this._focalOffset = new THREE.Vector3();
+        this._focalOffset = new THREE$1.Vector3();
         this._focalOffsetEnd = this._focalOffset.clone();
         // rotation
-        this._spherical = new THREE.Spherical().setFromVector3(_v3A.copy(this._camera.position).applyQuaternion(this._yAxisUpSpace));
+        this._spherical = new THREE$1.Spherical().setFromVector3(_v3A.copy(this._camera.position).applyQuaternion(this._yAxisUpSpace));
         this._sphericalEnd = this._spherical.clone();
         this._zoom = this._camera.zoom;
         this._zoomEnd = this._zoom;
         // collisionTest uses nearPlane.s
         this._nearPlaneCorners = [
-            new THREE.Vector3(),
-            new THREE.Vector3(),
-            new THREE.Vector3(),
-            new THREE.Vector3(),
+            new THREE$1.Vector3(),
+            new THREE$1.Vector3(),
+            new THREE$1.Vector3(),
+            new THREE$1.Vector3(),
         ];
         this._updateNearPlaneCorners();
         // Target cannot move outside of this box
-        this._boundary = new THREE.Box3(new THREE.Vector3(-Infinity, -Infinity, -Infinity), new THREE.Vector3(Infinity, Infinity, Infinity));
+        this._boundary = new THREE$1.Box3(new THREE$1.Vector3(-Infinity, -Infinity, -Infinity), new THREE$1.Vector3(Infinity, Infinity, Infinity));
         // reset
         this._target0 = this._target.clone();
         this._position0 = this._camera.position.clone();
         this._zoom0 = this._zoom;
         this._focalOffset0 = this._focalOffset.clone();
         this._dollyControlAmount = 0;
-        this._dollyControlCoord = new THREE.Vector2();
+        this._dollyControlCoord = new THREE$1.Vector2();
         // configs
         this.mouseButtons = {
             left: ACTION.ROTATE,
@@ -93096,9 +93096,9 @@ class CameraControls extends EventDispatcher {
             three: ACTION.TOUCH_TRUCK,
         };
         if (this._domElement) {
-            const dragStartPosition = new THREE.Vector2();
-            const lastDragPosition = new THREE.Vector2();
-            const dollyStart = new THREE.Vector2();
+            const dragStartPosition = new THREE$1.Vector2();
+            const lastDragPosition = new THREE$1.Vector2();
+            const dollyStart = new THREE$1.Vector2();
             const onPointerDown = (event) => {
                 if (!this._enabled)
                     return;
@@ -93529,28 +93529,28 @@ class CameraControls extends EventDispatcher {
      * @category Statics
      */
     static install(libs) {
-        THREE = libs.THREE;
-        _ORIGIN = Object.freeze(new THREE.Vector3(0, 0, 0));
-        _AXIS_Y = Object.freeze(new THREE.Vector3(0, 1, 0));
-        _AXIS_Z = Object.freeze(new THREE.Vector3(0, 0, 1));
-        _v2 = new THREE.Vector2();
-        _v3A = new THREE.Vector3();
-        _v3B = new THREE.Vector3();
-        _v3C = new THREE.Vector3();
-        _xColumn = new THREE.Vector3();
-        _yColumn = new THREE.Vector3();
-        _zColumn = new THREE.Vector3();
-        _deltaTarget = new THREE.Vector3();
-        _deltaOffset = new THREE.Vector3();
-        _sphericalA = new THREE.Spherical();
-        _sphericalB = new THREE.Spherical();
-        _box3A = new THREE.Box3();
-        _box3B = new THREE.Box3();
-        _sphere = new THREE.Sphere();
-        _quaternionA = new THREE.Quaternion();
-        _quaternionB = new THREE.Quaternion();
-        _rotationMatrix = new THREE.Matrix4();
-        _raycaster = new THREE.Raycaster();
+        THREE$1 = libs.THREE;
+        _ORIGIN = Object.freeze(new THREE$1.Vector3(0, 0, 0));
+        _AXIS_Y = Object.freeze(new THREE$1.Vector3(0, 1, 0));
+        _AXIS_Z = Object.freeze(new THREE$1.Vector3(0, 0, 1));
+        _v2 = new THREE$1.Vector2();
+        _v3A = new THREE$1.Vector3();
+        _v3B = new THREE$1.Vector3();
+        _v3C = new THREE$1.Vector3();
+        _xColumn = new THREE$1.Vector3();
+        _yColumn = new THREE$1.Vector3();
+        _zColumn = new THREE$1.Vector3();
+        _deltaTarget = new THREE$1.Vector3();
+        _deltaOffset = new THREE$1.Vector3();
+        _sphericalA = new THREE$1.Spherical();
+        _sphericalB = new THREE$1.Spherical();
+        _box3A = new THREE$1.Box3();
+        _box3B = new THREE$1.Box3();
+        _sphere = new THREE$1.Sphere();
+        _quaternionA = new THREE$1.Quaternion();
+        _quaternionB = new THREE$1.Quaternion();
+        _rotationMatrix = new THREE$1.Matrix4();
+        _raycaster = new THREE$1.Raycaster();
     }
     /**
      * list all ACTIONs
@@ -93789,8 +93789,8 @@ class CameraControls extends EventDispatcher {
      * @category Methods
      */
     rotateTo(azimuthAngle, polarAngle, enableTransition = false) {
-        const theta = THREE.MathUtils.clamp(azimuthAngle, this.minAzimuthAngle, this.maxAzimuthAngle);
-        const phi = THREE.MathUtils.clamp(polarAngle, this.minPolarAngle, this.maxPolarAngle);
+        const theta = THREE$1.MathUtils.clamp(azimuthAngle, this.minAzimuthAngle, this.maxAzimuthAngle);
+        const phi = THREE$1.MathUtils.clamp(polarAngle, this.minPolarAngle, this.maxPolarAngle);
         this._sphericalEnd.theta = theta;
         this._sphericalEnd.phi = phi;
         this._sphericalEnd.makeSafe();
@@ -93821,7 +93821,7 @@ class CameraControls extends EventDispatcher {
      */
     dollyTo(distance, enableTransition = false) {
         const lastRadius = this._sphericalEnd.radius;
-        const newRadius = THREE.MathUtils.clamp(distance, this.minDistance, this.maxDistance);
+        const newRadius = THREE$1.MathUtils.clamp(distance, this.minDistance, this.maxDistance);
         const hasCollider = this.colliderMeshes.length >= 1;
         if (hasCollider) {
             const maxDistanceByCollisionTest = this._collisionTest();
@@ -93859,7 +93859,7 @@ class CameraControls extends EventDispatcher {
      * @category Methods
      */
     zoomTo(zoom, enableTransition = false) {
-        this._zoomEnd = THREE.MathUtils.clamp(zoom, this.minZoom, this.maxZoom);
+        this._zoomEnd = THREE$1.MathUtils.clamp(zoom, this.minZoom, this.maxZoom);
         this._needsUpdate = true;
         if (!enableTransition) {
             this._zoom = this._zoomEnd;
@@ -93953,11 +93953,12 @@ class CameraControls extends EventDispatcher {
         const phi = roundToStep(this._sphericalEnd.phi, PI_HALF);
         promises.push(this.rotateTo(theta, phi, enableTransition));
         const normal = _v3A.setFromSpherical(this._sphericalEnd).normalize();
-        const rotation = _quaternionA.setFromUnitVectors(normal, _AXIS_Z).multiply(this._yAxisUpSpaceInverse);
+        const rotation = _quaternionA.setFromUnitVectors(normal, _AXIS_Z);
         const viewFromPolar = approxEquals(Math.abs(normal.y), 1);
         if (viewFromPolar) {
             rotation.multiply(_quaternionB.setFromAxisAngle(_AXIS_Y, theta));
         }
+        rotation.multiply(this._yAxisUpSpaceInverse);
         // make oriented bounding box
         const bb = _box3B.makeEmpty();
         // left bottom back corner
@@ -93989,7 +93990,11 @@ class CameraControls extends EventDispatcher {
         bb.min.y -= paddingBottom;
         bb.max.x += paddingRight;
         bb.max.y += paddingTop;
-        rotation.setFromUnitVectors(_AXIS_Z, normal).multiply(this._yAxisUpSpace);
+        rotation.setFromUnitVectors(_AXIS_Z, normal);
+        if (viewFromPolar) {
+            rotation.premultiply(_quaternionB.invert());
+        }
+        rotation.premultiply(this._yAxisUpSpace);
         const bbSize = bb.getSize(_v3A);
         const center = bb.getCenter(_v3B).applyQuaternion(rotation);
         if (isPerspectiveCamera(this._camera)) {
@@ -94017,7 +94022,7 @@ class CameraControls extends EventDispatcher {
      */
     fitToSphere(sphereOrMesh, enableTransition) {
         const promises = [];
-        const isSphere = sphereOrMesh instanceof THREE.Sphere;
+        const isSphere = sphereOrMesh instanceof THREE$1.Sphere;
         const boundingSphere = isSphere ?
             _sphere.copy(sphereOrMesh) :
             createBoundingSphere(sphereOrMesh, _sphere);
@@ -94208,7 +94213,7 @@ class CameraControls extends EventDispatcher {
             this._viewport = null;
             return;
         }
-        this._viewport = this._viewport || new THREE.Vector4();
+        this._viewport = this._viewport || new THREE$1.Vector4();
         if (typeof viewportOrX === 'number') { // number
             this._viewport.set(viewportOrX, y, width, height);
         }
@@ -94228,7 +94233,7 @@ class CameraControls extends EventDispatcher {
         if (notSupportedInOrthographicCamera(this._camera, 'getDistanceToFitBox'))
             return this._spherical.radius;
         const boundingRectAspect = width / height;
-        const fov = this._camera.getEffectiveFOV() * THREE.MathUtils.DEG2RAD;
+        const fov = this._camera.getEffectiveFOV() * THREE$1.MathUtils.DEG2RAD;
         const aspect = this._camera.aspect;
         const heightToFit = (cover ? boundingRectAspect > aspect : boundingRectAspect < aspect) ? height : width / aspect;
         return heightToFit * 0.5 / Math.tan(fov * 0.5) + depth * 0.5;
@@ -94243,7 +94248,7 @@ class CameraControls extends EventDispatcher {
         if (notSupportedInOrthographicCamera(this._camera, 'getDistanceToFitSphere'))
             return this._spherical.radius;
         // https://stackoverflow.com/a/44849975
-        const vFOV = this._camera.getEffectiveFOV() * THREE.MathUtils.DEG2RAD;
+        const vFOV = this._camera.getEffectiveFOV() * THREE$1.MathUtils.DEG2RAD;
         const hFOV = Math.atan(Math.tan(vFOV * 0.5) * this._camera.aspect) * 2;
         const fov = 1 < this._camera.aspect ? vFOV : hFOV;
         return radius / (Math.sin(fov * 0.5));
@@ -94254,7 +94259,7 @@ class CameraControls extends EventDispatcher {
      * @category Methods
      */
     getTarget(out) {
-        const _out = !!out && out.isVector3 ? out : new THREE.Vector3();
+        const _out = !!out && out.isVector3 ? out : new THREE$1.Vector3();
         return _out.copy(this._targetEnd);
     }
     /**
@@ -94263,7 +94268,7 @@ class CameraControls extends EventDispatcher {
      * @category Methods
      */
     getPosition(out) {
-        const _out = !!out && out.isVector3 ? out : new THREE.Vector3();
+        const _out = !!out && out.isVector3 ? out : new THREE$1.Vector3();
         return _out.setFromSpherical(this._sphericalEnd).applyQuaternion(this._yAxisUpSpaceInverse).add(this._targetEnd);
     }
     /**
@@ -94272,7 +94277,7 @@ class CameraControls extends EventDispatcher {
      * @category Methods
      */
     getFocalOffset(out) {
-        const _out = !!out && out.isVector3 ? out : new THREE.Vector3();
+        const _out = !!out && out.isVector3 ? out : new THREE$1.Vector3();
         return _out.copy(this._focalOffsetEnd);
     }
     /**
@@ -94362,7 +94367,7 @@ class CameraControls extends EventDispatcher {
                 if (planeX.lengthSq() === 0)
                     planeX.x = 1.0;
                 const planeY = _v3C.crossVectors(planeX, direction);
-                const worldToScreen = this._sphericalEnd.radius * Math.tan(camera.getEffectiveFOV() * THREE.MathUtils.DEG2RAD * 0.5);
+                const worldToScreen = this._sphericalEnd.radius * Math.tan(camera.getEffectiveFOV() * THREE$1.MathUtils.DEG2RAD * 0.5);
                 const prevRadius = this._sphericalEnd.radius - this._dollyControlAmount;
                 const lerpRatio = (prevRadius - this._sphericalEnd.radius) / this._sphericalEnd.radius;
                 const cursor = _v3A.copy(this._targetEnd)
@@ -94563,7 +94568,7 @@ class CameraControls extends EventDispatcher {
         if (isPerspectiveCamera(this._camera)) {
             const camera = this._camera;
             const near = camera.near;
-            const fov = camera.getEffectiveFOV() * THREE.MathUtils.DEG2RAD;
+            const fov = camera.getEffectiveFOV() * THREE$1.MathUtils.DEG2RAD;
             const heightHalf = Math.tan(fov * 0.5) * near; // near plain half height
             const widthHalf = heightHalf * camera.aspect; // near plain half width
             this._nearPlaneCorners[0].set(-widthHalf, -heightHalf, 0);
@@ -94673,7 +94678,7 @@ function createBoundingSphere(object3d, out) {
             // for old three.js, which supports both BufferGeometry and Geometry
             // this condition block will be removed in the near future.
             const position = geometry.attributes.position;
-            const vector = new THREE.Vector3();
+            const vector = new THREE$1.Vector3();
             for (let i = 0, l = position.count; i < l; i++) {
                 vector.fromBufferAttribute(position, i);
                 maxRadiusSq = Math.max(maxRadiusSq, center.distanceToSquared(vector));
@@ -112544,27 +112549,21 @@ class IfcViewerAPI {
     }
 }
 
+/*!
+ * hold-event
+ * https://github.com/yomotsu/hold-event
+ * (c) 2020 @yomotsu
+ * Released under the MIT License.
+ */
+(function(global,factory){typeof exports==="object"&&typeof module!=="undefined"?factory(exports):typeof define==="function"&&define.amd?define(["exports"],factory):(global=typeof globalThis!=="undefined"?globalThis:global||self,factory(global.holdEvent={}));})(undefined,(function(exports){exports.HOLD_EVENT_TYPE=void 0;(function(HOLD_EVENT_TYPE){HOLD_EVENT_TYPE["HOLD_START"]="holdStart";HOLD_EVENT_TYPE["HOLD_END"]="holdEnd";HOLD_EVENT_TYPE["HOLDING"]="holding";})(exports.HOLD_EVENT_TYPE||(exports.HOLD_EVENT_TYPE={}));class EventDispatcher{constructor(){this._listeners={};}addEventListener(type,listener){const listeners=this._listeners;if(listeners[type]===undefined)listeners[type]=[];if(listeners[type].indexOf(listener)===-1)listeners[type].push(listener);}removeEventListener(type,listener){const listeners=this._listeners;const listenerArray=listeners[type];if(listenerArray!==undefined){const index=listenerArray.indexOf(listener);if(index!==-1)listenerArray.splice(index,1);}}dispatchEvent(event){const listeners=this._listeners;const listenerArray=listeners[event.type];if(listenerArray!==undefined){event.target=this;const array=listenerArray.slice(0);for(let i=0,l=array.length;i<l;i++){array[i].call(this,event);}}}}class Hold extends EventDispatcher{constructor(holdIntervalDelay){super();this._enabled=true;this._holding=false;this._intervalId=-1;this._deltaTime=0;this._elapsedTime=0;this._lastTime=0;this._holdStart=event=>{if(!this._enabled)return;if(this._holding)return;this._deltaTime=0;this._elapsedTime=0;this._lastTime=performance.now();this.dispatchEvent({type:exports.HOLD_EVENT_TYPE.HOLD_START,deltaTime:this._deltaTime,elapsedTime:this._elapsedTime,originalEvent:event});this._holding=true;const cb=()=>{this._intervalId=!!this.holdIntervalDelay?window.setTimeout(cb,this.holdIntervalDelay):window.requestAnimationFrame(cb);const now=performance.now();this._deltaTime=now-this._lastTime;this._elapsedTime+=this._deltaTime;this._lastTime=performance.now();this.dispatchEvent({type:exports.HOLD_EVENT_TYPE.HOLDING,deltaTime:this._deltaTime,elapsedTime:this._elapsedTime,originalEvent:event});};this._intervalId=!!this.holdIntervalDelay?window.setTimeout(cb,this.holdIntervalDelay):window.requestAnimationFrame(cb);};this._holdEnd=event=>{if(!this._enabled)return;if(!this._holding)return;const now=performance.now();this._deltaTime=now-this._lastTime;this._elapsedTime+=this._deltaTime;this._lastTime=performance.now();this.dispatchEvent({type:exports.HOLD_EVENT_TYPE.HOLD_END,deltaTime:this._deltaTime,elapsedTime:this._elapsedTime,originalEvent:event});window.clearTimeout(this._intervalId);window.cancelAnimationFrame(this._intervalId);this._holding=false;};this.holdIntervalDelay=holdIntervalDelay;}get enabled(){return this._enabled}set enabled(enabled){if(this._enabled===enabled)return;this._enabled=enabled;if(!this._enabled)this._holdEnd();}}class ElementHold extends Hold{constructor(element,holdIntervalDelay){super(holdIntervalDelay);this._holdStart=this._holdStart.bind(this);this._holdEnd=this._holdEnd.bind(this);const onPointerDown=this._holdStart;const onPointerUp=this._holdEnd;element.addEventListener("mousedown",onPointerDown);document.addEventListener("mouseup",onPointerUp);window.addEventListener("blur",this._holdEnd);}}class KeyboardKeyHold extends Hold{constructor(keyCode,holdIntervalDelay){super(holdIntervalDelay);this._holdStart=this._holdStart.bind(this);this._holdEnd=this._holdEnd.bind(this);const onKeydown=event=>{if(isInputEvent(event))return;if(event.keyCode!==keyCode)return;this._holdStart(event);};const onKeyup=event=>{if(event.keyCode!==keyCode)return;this._holdEnd(event);};document.addEventListener("keydown",onKeydown);document.addEventListener("keyup",onKeyup);window.addEventListener("blur",this._holdEnd);}}function isInputEvent(event){const target=event.target;return target.tagName==="INPUT"||target.tagName==="SELECT"||target.tagName==="TEXTAREA"||target.isContentEditable}exports.ElementHold=ElementHold;exports.KeyboardKeyHold=KeyboardKeyHold;Object.defineProperty(exports,"__esModule",{value:true});}));
+
 const container = document.getElementById('three-canvas');
 const viewer = new IfcViewerAPI({ container, backgroundColor: new Color(0xffffff) });
 viewer.grid.setGrid();
 viewer.axes.setAxes();
 
-function animate() {
-    // // update the time for camera-controls
-    // const delta = clock.getDelta();
-    // update camera-controls
-    // cameraControls.update( delta );
-    
-    requestAnimationFrame(animate); 
-    //render Scene and camera
-    // renderer.render( scene, camera );
-    // //render label renderer
-    // labelRenderer.render(scene, camera);
-    
-    // update shadow Size
-    // updateShadowMapSize()
-}
-animate();
+// 1.0 Get the Scene
+const scene = viewer.context.getScene();
 
 //Load IFC Model with IFC-THREE-VIEWER
 async function loadIfc(url) {
@@ -112721,3 +112720,142 @@ function removeAllChildren(element) {
         element.removeChild(element.firstChild);
     }
 }
+
+
+// 3 The Camera
+
+    // 3.1 Get the camera
+    viewer.context.getIfcCamera();
+
+    // 3.2 Get Camera Controls
+    const cameraControls = viewer.context.ifcCamera.cameraControls;
+    const clock = new Clock();
+
+        // Min and Max DOLLY ("Zoom")
+        cameraControls.minDistance = 10;
+        cameraControls.maxDistance = 50;
+
+        // Mouse controls
+        cameraControls.mouseButtons.middle = CameraControls.ACTION.TRUCK;
+        cameraControls.mouseButtons.right = CameraControls.ACTION.DOLLY;
+        cameraControls.mouseButtons.wheel = CameraControls.ACTION.DOLLY;
+        // Polar Angle
+        cameraControls.minPolarAngle = Math.PI / 4;
+        cameraControls.maxPolarAngle = 0.55 * Math.PI;
+
+        // Keyboards keys to navigate
+        const KEYCODE = {
+            W: 87,
+            A: 65,
+            S: 83,
+            D: 68,
+            ARROW_LEFT : 37,
+            ARROW_UP   : 38,
+            ARROW_RIGHT: 39,
+            ARROW_DOWN : 40,
+        };
+
+        const wKey = new holdEvent.KeyboardKeyHold( KEYCODE.W, 16.666 );
+        const aKey = new holdEvent.KeyboardKeyHold( KEYCODE.A, 16.666 );
+        const sKey = new holdEvent.KeyboardKeyHold( KEYCODE.S, 16.666 );
+        const dKey = new holdEvent.KeyboardKeyHold( KEYCODE.D, 16.666 );
+        aKey.addEventListener( 'holding', function( event ) { cameraControls.truck( - 0.01 * event.deltaTime, 0, false ); } );
+        dKey.addEventListener( 'holding', function( event ) { cameraControls.truck(   0.01 * event.deltaTime, 0, false ); } );
+        wKey.addEventListener( 'holding', function( event ) { cameraControls.forward(   0.01 * event.deltaTime, false ); } );
+        sKey.addEventListener( 'holding', function( event ) { cameraControls.forward( - 0.01 * event.deltaTime, false ); } );
+        
+        const leftKey  = new holdEvent.KeyboardKeyHold( KEYCODE.ARROW_LEFT,  100 );
+        const rightKey = new holdEvent.KeyboardKeyHold( KEYCODE.ARROW_RIGHT, 100 );
+        const upKey    = new holdEvent.KeyboardKeyHold( KEYCODE.ARROW_UP,    100 );
+        const downKey  = new holdEvent.KeyboardKeyHold( KEYCODE.ARROW_DOWN,  100 );
+        leftKey.addEventListener ( 'holding', function( event ) { cameraControls.rotate( - 0.1 * THREE.MathUtils.DEG2RAD * event.deltaTime, 0, true ); } );
+        rightKey.addEventListener( 'holding', function( event ) { cameraControls.rotate(   0.1 * THREE.MathUtils.DEG2RAD * event.deltaTime, 0, true ); } );
+        upKey.addEventListener   ( 'holding', function( event ) { cameraControls.rotate( 0, - 0.05 * THREE.MathUtils.DEG2RAD * event.deltaTime, true ); } );
+        downKey.addEventListener ( 'holding', function( event ) { cameraControls.rotate( 0,   0.05 * THREE.MathUtils.DEG2RAD * event.deltaTime, true ); } );
+
+    // 3.3 Set camera position (x, y , z) + camera target (x, y, z)
+    cameraControls.setLookAt(-2, 2, 8, 0, 1, 0);
+    // 3.4 Set the camera distance
+    cameraControls.distance = 15;
+
+// Fit Camera to the model bounding Box
+    const fitViewButton = document.getElementById("fit-view");
+    fitViewButton.onclick = () => {
+        viewer.context.renderer.postProduction.active = false;
+        // viewer.context.ifcCamera.cameraControls.fitToBox(scene.children[0], true);
+        fitView();
+        viewer.context.renderer.postProduction.active = true;
+
+    };
+
+    function fitView() {
+        let cameraPositionX = cameraControls.getPosition().x;
+        let cameraPositionY = cameraControls.getPosition().y;
+        let cameraPositionZ = cameraControls.getPosition().z;
+        let cameraTargetX = cameraControls.getTarget().x;
+        let cameraTargetY = cameraControls.getTarget().y;
+        let cameraTargetZ = cameraControls.getTarget().z;
+        cameraControls.fitToBox(scene.children[0], false, {paddingTop:0, paddingLeft: 0, paddingBottom:0, paddingRight:0});
+        let newCameraPositionX = cameraControls.getPosition().x;
+        let newCameraPositionY = cameraControls.getPosition().y;
+        let newCameraPositionZ = cameraControls.getPosition().z;
+        let difPositionX = Math.abs(newCameraPositionX / cameraPositionX);
+        let difPositionY = Math.abs(newCameraPositionY / cameraPositionY);
+        let difPositionZ = Math.abs(newCameraPositionZ / cameraPositionZ);
+        let distanceCoefficient = Math.max(difPositionX, difPositionY, difPositionZ);
+        cameraControls.setPosition(cameraPositionX * distanceCoefficient, cameraPositionY * distanceCoefficient, cameraPositionZ * distanceCoefficient);
+        cameraControls.setTarget(cameraTargetX, cameraTargetY, cameraTargetZ);
+    }
+
+// Left View
+const leftViewButton = document.getElementById("left-view");
+leftViewButton.onclick = () => {
+    viewer.context.renderer.postProduction.active = false;
+    cameraControls.setLookAt(-50, 2.7, 0, 0, 2.7, 0);
+    cameraControls.fitToBox(scene.children[0], true, {paddingTop:0, paddingLeft: 0, paddingBottom:0, paddingRight:0});
+    viewer.context.renderer.postProduction.active = true;
+};
+
+// Front View
+const frontViewButton = document.getElementById("front-view");
+frontViewButton.onclick = () => {
+    viewer.context.renderer.postProduction.active = false;
+    cameraControls.setLookAt(0, 2.7, 50, 0, 2.7, 0);
+    cameraControls.fitToBox(scene.children[0], true, {paddingTop:0, paddingLeft: 0, paddingBottom:0, paddingRight:0});
+    viewer.context.renderer.postProduction.active = true;
+};
+
+// Right View
+const rightViewButton = document.getElementById("right-view");
+rightViewButton.onclick = () => {
+    viewer.context.renderer.postProduction.active = false;
+    cameraControls.setLookAt(50, 2.7, 0, 0, 2.7, 0);
+    cameraControls.fitToBox(scene.children[0], true, {paddingTop:0, paddingLeft: 0, paddingBottom:0, paddingRight:0});
+    viewer.context.renderer.postProduction.active = true;
+};
+
+// Back View
+const backViewButton = document.getElementById("back-view");
+backViewButton.onclick = () => {
+    viewer.context.renderer.postProduction.active = false;
+    cameraControls.setLookAt(0, 2.7, -50, 0, 2.7, 0);
+    cameraControls.fitToBox(scene.children[0], true, {paddingTop:0, paddingLeft: 0, paddingBottom:0, paddingRight:0});
+    viewer.context.renderer.postProduction.active = true;
+};
+
+function animate() {
+    // update the time for camera-controls
+    const delta = clock.getDelta();
+    // update camera-controls
+    cameraControls.update( delta );
+    
+    requestAnimationFrame(animate); 
+    //render Scene and camera
+    // renderer.render( scene, camera );
+    // //render label renderer
+    // labelRenderer.render(scene, camera);
+    
+    // update shadow Size
+    // updateShadowMapSize()
+}
+animate();
